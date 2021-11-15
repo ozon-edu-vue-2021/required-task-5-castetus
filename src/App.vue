@@ -1,14 +1,20 @@
 <template>
-  <div id="app">
-  </div>
+  <div id="app"></div>
 </template>
 
 <script>
-
 export default {
-  name: "App",
-  components: {
-    Form,
+  name: 'App',
+  components: {},
+  data() {
+    return {
+      isLoaded: false,
+    };
+  },
+  async created() {
+    this.isLoaded = true;
+    await this.$store.dispatch('getGoods');
+    this.isLoaded = false;
   },
 };
 </script>
