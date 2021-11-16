@@ -12,13 +12,22 @@ export default new Vuex.Store({
   },
   mutations: {
     SET_GOODS(state, goods) {
+      goods.forEach(
+        (product) => (
+          (product.isFavorite = false),
+          (product.price = Math.round(Math.random() * 10000)),
+          (product.img = toString(Math.round(Math.random() * 12)))
+        )
+      );
       state.goods = goods;
     },
     ADD_TO_CART(state, params) {
-      const existedCartItem = state.cart.find((item) => {
-        item.product.id === params.id;
-      });
+      const findItem = (item) => {
+        return item.product.id === params.id;
+      };
+      const existedCartItem = state.cart.find(findItem);
       if (existedCartItem) {
+        console.log('1');
         existedCartItem.qty += params.qty;
       } else {
         const product = state.goods.find((product) => product.id === params.id);
@@ -38,11 +47,10 @@ export default new Vuex.Store({
       }
     },
     SET_FAVORITE(state, params) {
-      const product = state.goods.find((item) => {
-        item.id === params.id;
-        console.log(item.id, params.id);
-      });
-      console.log(product);
+      const findItem = (item) => {
+        return item.id === params.id;
+      };
+      const product = state.goods.find(findItem);
       if (product) {
         product.isFavorite = params.value;
       }

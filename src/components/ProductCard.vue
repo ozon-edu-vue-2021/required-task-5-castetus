@@ -1,5 +1,6 @@
 <template>
   <div class="product-card">
+    <img class="product-card__img" :src="imgSrc" alt="" />
     <button
       @click="isFavorite = !isFavorite"
       class="btn product-card__fav-btn"
@@ -7,7 +8,7 @@
     >
       <HeartIcon :size="48" />
     </button>
-    <span class="product-card__price">{{ price() }}р.</span>
+    <span class="product-card__price">{{ product.price }}р.</span>
     <h3 class="product-card__title">{{ product.dish }}</h3>
     <p class="product-card__description">{{ product.description }}</p>
     <span class="product-card__ingredients"
@@ -68,6 +69,7 @@ export default {
   },
   data() {
     return {
+      price: 0,
       isAdding: false,
       currentQuantity: 1,
     };
@@ -81,11 +83,11 @@ export default {
         this.$store.commit('SET_FAVORITE', { id: this.product.id, value });
       },
     },
+    imgSrc() {
+      return require('../assets/images/1.webp');
+    },
   },
   methods: {
-    price() {
-      return Math.round(Math.random() * 10000);
-    },
     addToCartHandler() {
       if (!this.isAdding) {
         this.isAdding = true;
@@ -115,6 +117,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 }
 .product-card__add-to-cart-button {
   border-radius: 5px;
@@ -135,6 +138,13 @@ export default {
 }
 .product-card__fav-btn {
   color: grey;
+  position: absolute;
+  top: -18px;
+  right: -16px;
+}
+.product-card__img {
+  object-fit: cover;
+  width: 100%;
 }
 .btn_active {
   color: blue;

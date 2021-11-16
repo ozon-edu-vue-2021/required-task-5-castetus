@@ -1,9 +1,13 @@
 <template>
-  <div class="about">
+  <div class="cart">
     <h1>Cart</h1>
-    <div class="cart-content">
-      <CartItem v-for="item in cartContent" :key="item.product.id" />
-    </div>
+    <table class="cart-content">
+      <CartItem
+        v-for="item in cartContent"
+        :key="item.product.id"
+        :item="item"
+      />
+    </table>
   </div>
 </template>
 
@@ -22,3 +26,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.cart-content {
+  width: 100%;
+}
+</style>
