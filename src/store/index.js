@@ -37,6 +37,16 @@ export default new Vuex.Store({
         state.cart.splice(removingProductIndex, 1);
       }
     },
+    SET_FAVORITE(state, params) {
+      const product = state.goods.find((item) => {
+        item.id === params.id;
+        console.log(item.id, params.id);
+      });
+      console.log(product);
+      if (product) {
+        product.isFavorite = params.value;
+      }
+    },
   },
   actions: {
     async getGoods({ commit }) {
@@ -56,6 +66,9 @@ export default new Vuex.Store({
       let sum = 0;
       state.cart.forEach((item) => (sum += item.qty));
       return sum;
+    },
+    getFavorites(state) {
+      return state.goods.filter((product) => product.isFavorite);
     },
   },
 });

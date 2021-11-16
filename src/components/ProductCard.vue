@@ -1,5 +1,12 @@
 <template>
   <div class="product-card">
+    <button
+      @click="isFavorite = !isFavorite"
+      class="btn product-card__fav-btn"
+      :class="{ btn_active: isFavorite }"
+    >
+      <HeartIcon :size="48" />
+    </button>
     <span class="product-card__price">{{ price() }}р.</span>
     <h3 class="product-card__title">{{ product.dish }}</h3>
     <p class="product-card__description">{{ product.description }}</p>
@@ -11,7 +18,7 @@
     >
     <div class="product-card__actions">
       <button
-        class="product-card__add-to-cart-button"
+        class="btn product-card__add-to-cart-button"
         @click="addToCartHandler"
         v-show="!this.isAdding"
       >
@@ -19,19 +26,22 @@
       </button>
       <div class="product-card__quantity" v-show="this.isAdding">
         <button
-          class="product-card__quantity-btn product-card__quantity-btn_minus"
+          class="
+            btn
+            product-card__quantity-btn product-card__quantity-btn_minus
+          "
           @click="changeQuantity(-1)"
         >
-          -
+          <MinusIcon :size="36" />
         </button>
         <span class="product-card__quantity-text"
           >{{ currentQuantity }} шт</span
         >
         <button
-          class="product-card__quantity-btn product-card__quantity-btn_plus"
+          class="btn product-card__quantity-btn product-card__quantity-btn_plus"
           @click="changeQuantity(1)"
         >
-          +
+          <PlusIcon :size="36" />
         </button>
       </div>
     </div>
@@ -39,6 +49,10 @@
 </template>
 
 <script>
+import PlusIcon from 'vue-material-design-icons/Plus.vue';
+import MinusIcon from 'vue-material-design-icons/Minus.vue';
+import HeartIcon from 'vue-material-design-icons/Heart.vue';
+
 export default {
   name: 'ProductCard',
   props: {
@@ -47,15 +61,27 @@ export default {
       required: true,
     },
   },
+  components: {
+    PlusIcon,
+    MinusIcon,
+    HeartIcon,
+  },
   data() {
     return {
       isAdding: false,
       currentQuantity: 1,
     };
   },
-  // computed: {
-  //   getCart
-  // },
+  computed: {
+    isFavorite: {
+      get() {
+        return !!this.product.isFavorite;
+      },
+      set(value) {
+        this.$store.commit('SET_FAVORITE', { id: this.product.id, value });
+      },
+    },
+  },
   methods: {
     price() {
       return Math.round(Math.random() * 10000);
@@ -94,7 +120,6 @@ export default {
   border-radius: 5px;
   background: blue;
   color: #fff;
-  border: none;
   padding: 10px;
   cursor: pointer;
 }
@@ -104,10 +129,14 @@ export default {
   justify-content: center;
 }
 .product-card__quantity-btn {
-  background: none;
-  border: none;
   cursor: pointer;
   color: blue;
   font-size: 50px;
+}
+.product-card__fav-btn {
+  color: grey;
+}
+.btn_active {
+  color: blue;
 }
 </style>

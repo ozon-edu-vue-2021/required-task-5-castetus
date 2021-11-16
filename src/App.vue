@@ -1,19 +1,17 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link class="header-link" to="/">Каталог</router-link> |
-      <router-link class="header-link" to="/cart"
-        >Корзина
-        <span class="cart-quantity">{{ cartQuantity }}</span></router-link
-      >
-    </div>
+    <AppHeader />
     <router-view />
   </div>
 </template>
 <script>
+import AppHeader from '@/components/AppHeader.vue';
+
 export default {
   name: 'App',
-  components: {},
+  components: {
+    AppHeader,
+  },
   data() {
     return {
       isLoaded: false,
@@ -23,11 +21,6 @@ export default {
     this.isLoaded = true;
     await this.$store.dispatch('getGoods');
     this.isLoaded = false;
-  },
-  computed: {
-    cartQuantity() {
-      return this.$store.getters['getCartQuantity'];
-    },
   },
 };
 </script>
@@ -40,33 +33,9 @@ export default {
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-.header-link {
-  position: relative;
-}
-.cart-quantity {
-  color: #fff;
-  background: blue;
-  border-radius: 50%;
-  font-size: 12px;
-  width: 15px;
-  height: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: -8px;
-  right: -15px;
+.btn {
+  background: none;
+  cursor: pointer;
+  border: none;
 }
 </style>

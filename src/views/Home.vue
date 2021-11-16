@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <h1>Catalog</h1>
     <ProductGrid :products="goodsList" />
   </div>
 </template>
