@@ -37,5 +37,10 @@ export default {
   background: none;
   cursor: pointer;
   border: none;
+  text-transform: uppercase;
+}
+.currency-symbol {
+  position: relative;
+  top: 2px;
 }
 </style>

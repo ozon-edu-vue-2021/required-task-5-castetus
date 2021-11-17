@@ -8,7 +8,9 @@
     >
       <HeartIcon :size="48" />
     </button>
-    <span class="product-card__price">{{ product.price }}р.</span>
+    <span class="product-card__price"
+      >{{ product.price }}<CurrencyIcon class="currency-symbol" :size="16"
+    /></span>
     <h3 class="product-card__title">{{ product.dish }}</h3>
     <p class="product-card__description">{{ product.description }}</p>
     <span class="product-card__ingredients"
@@ -35,9 +37,7 @@
         >
           <MinusIcon :size="36" />
         </button>
-        <span class="product-card__quantity-text"
-          >{{ currentQuantity }} шт</span
-        >
+        <span class="product-card__quantity-text">{{ currentQuantity }}</span>
         <button
           class="btn product-card__quantity-btn product-card__quantity-btn_plus"
           @click="changeQuantity(1)"
@@ -53,6 +53,7 @@
 import PlusIcon from 'vue-material-design-icons/Plus.vue';
 import MinusIcon from 'vue-material-design-icons/Minus.vue';
 import HeartIcon from 'vue-material-design-icons/Heart.vue';
+import CurrencyIcon from 'vue-material-design-icons/CurrencyRub.vue';
 
 export default {
   name: 'ProductCard',
@@ -66,6 +67,7 @@ export default {
     PlusIcon,
     MinusIcon,
     HeartIcon,
+    CurrencyIcon,
   },
   data() {
     return {

@@ -78,5 +78,10 @@ export default new Vuex.Store({
     getFavorites(state) {
       return state.goods.filter((product) => product.isFavorite);
     },
+    getCartSum(state) {
+      let sum = 0;
+      state.cart.forEach((item) => (sum += item.qty * item.product.price));
+      return sum;
+    },
   },
 });

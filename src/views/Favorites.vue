@@ -1,7 +1,8 @@
 <template>
   <div class="favorites">
     <h1>Favorites</h1>
-    <ProductGrid v-if="favoritesList.length" :products="favoritesList" />
+    <h2 v-if="!favoritesList.length">You have not any favorite products</h2>
+    <ProductGrid v-else :products="favoritesList" />
   </div>
 </template>
 
