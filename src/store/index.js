@@ -17,7 +17,7 @@ export default new Vuex.Store({
         (product) => (
           (product.isFavorite = false),
           (product.price = Math.round(Math.random() * 10000)),
-          (product.img = toString(Math.round(Math.random() * 12)))
+          (product.img = Math.round(Math.random() * 11))
         )
       );
       state.goods = goods;
@@ -57,6 +57,10 @@ export default new Vuex.Store({
         product.isFavorite = params.value;
       }
     },
+    SET_CART_ITEM_QUANTITY(state, params) {
+      const cartItem = state.cart.find((item) => item.product.id === params.id);
+      cartItem.qty = params.qty;
+    },
   },
   actions: {
     async getGoods({ commit }) {
@@ -74,8 +78,8 @@ export default new Vuex.Store({
   getters: {
     getCartQuantity(state) {
       let sum = 0;
-      state.cart.forEach((item) => (sum += item.qty));
-      return sum;
+      state.cart.forEach((item) => (sum += Number(item.qty)));
+      return Number(sum);
     },
     getFavorites(state) {
       return state.goods.filter((product) => product.isFavorite);
@@ -84,6 +88,9 @@ export default new Vuex.Store({
       let sum = 0;
       state.cart.forEach((item) => (sum += item.qty * item.product.price));
       return sum;
+    },
+    getCartItemQty: (state) => (id) => {
+      return state.cart.find((item) => item.product.id === id)?.qty;
     },
   },
 });

@@ -86,7 +86,7 @@ export default {
       },
     },
     imgSrc() {
-      return require('../assets/images/1.webp');
+      return require(`../assets/images/${this.product.img}.webp`);
     },
   },
   methods: {

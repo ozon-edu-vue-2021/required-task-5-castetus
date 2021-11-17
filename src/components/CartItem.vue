@@ -10,6 +10,9 @@
       {{ item.product.price }}р. x {{ item.qty }} = {{ sum
       }}<CurrencyIcon class="currency-symbol" :size="16" />
     </td>
+    <td class="cart-item__qty">
+      <input type="number" name="" id="" v-model="itemQty" />
+    </td>
     <td class="cart-item__actions">
       <button class="btn cart-item__remove-btn" @click="remove()">
         <DeleteIcon :size="36" />
@@ -36,10 +39,26 @@ export default {
   },
   computed: {
     imgSrc() {
-      return require('../assets/images/1.webp');
+      return require(`../assets/images/${this.item.product.img}.webp`);
     },
     sum() {
       return this.item.product.price * this.item.qty;
+    },
+    itemQty: {
+      get() {
+        return this.$store.getters['getCartItemQty'](this.item.product.id);
+      },
+      set(val) {
+        if (val < 1) {
+          this.$store.commit('REMOVE_FROM_CART', this.item.product.id);
+          return;
+        }
+        const params = {
+          qty: val,
+          id: this.item.product.id,
+        };
+        this.$store.commit('SET_CART_ITEM_QUANTITY', params);
+      },
     },
   },
   methods: {
@@ -69,5 +88,9 @@ export default {
 .cart-item__img-wrapper img {
   width: 100%;
   object-fit: cover;
+}
+.cart-item__qty input {
+  text-align: right;
+  width: 40px;
 }
 </style>
