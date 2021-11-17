@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     goods: [],
     cart: [],
+    isLoaded: false,
   },
   mutations: {
     SET_GOODS(state, goods) {
@@ -20,6 +21,7 @@ export default new Vuex.Store({
         )
       );
       state.goods = goods;
+      state.isLoaded = true;
     },
     ADD_TO_CART(state, params) {
       const findItem = (item) => {

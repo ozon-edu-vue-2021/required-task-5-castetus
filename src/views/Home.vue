@@ -1,7 +1,8 @@
 <template>
   <div class="home">
     <h1>Catalog</h1>
-    <ProductGrid :products="goodsList" />
+    <h2 v-if="!isLoaded">Loading...</h2>
+    <ProductGrid :products="goodsList" v-else />
   </div>
 </template>
 
@@ -16,6 +17,9 @@ export default {
   computed: {
     goodsList() {
       return this.$store.state.goods;
+    },
+    isLoaded() {
+      return this.$store.state.isLoaded;
     },
   },
 };
